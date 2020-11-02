@@ -19,14 +19,14 @@
             <v-tab-item>
                 <v-divider></v-divider>
                 <v-container>
-                    
+                    <LinkedEmployees></LinkedEmployees>
                 </v-container>
             </v-tab-item>
 
             <v-tab-item>
                 <v-divider></v-divider>
                 <v-container>
-                    
+                    <UnlinkedEmployees></UnlinkedEmployees>
                 </v-container>
             </v-tab-item>
         </v-tabs>
@@ -36,11 +36,15 @@
 
 <script>
 import AllEmployees from './AllEmployees'
+import LinkedEmployees from './LinkedEmployees'
+import UnlinkedEmployees from './UnlinkedEmployees'
 
 export default {
   name: 'Home',
   components: {
-      AllEmployees
+      AllEmployees,
+      LinkedEmployees,
+      UnlinkedEmployees
   }
 }
 </script>

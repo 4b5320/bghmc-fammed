@@ -1,6 +1,6 @@
 <template>
 <div>
-    <v-data-table :headers="headers" :items="desserts" :search="search" sort-by="calories" class="elevation-1" :loading="loading" loading-text="Loading... Please wait">
+    <v-data-table :headers="headers" :items="linked" :search="search" sort-by="calories" class="elevation-1" :loading="loading" loading-text="Loading... Please wait">
         <template v-slot:top>
             <v-toolbar flat >
             <v-toolbar-title>List of all Employees</v-toolbar-title>
@@ -103,7 +103,7 @@
 <script>
 import axios from 'axios'
     export default {
-        name: 'AllEmployees',
+        name: 'LinkedEmployees',
         data: () => ({
             search: '',
             alpha: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
@@ -138,6 +138,7 @@ import axios from 'axios'
         position: '',
         department: ''
       },
+      linked: []
     }),
 
     computed: {
@@ -164,8 +165,12 @@ import axios from 'axios'
             // Get employee data from DB
             axios.get(`http://localhost:8001/api/employees`)
                 .then(res => {
-                    console.log(res.data);
-                    this.desserts = res.data;
+                    Object.values(res.data).forEach(employee => {
+                        if(employee.patient_id != null){
+                            this.linked.unshift(employee);
+                        }
+                    })
+
                     this.loading = false;
                 }).catch(err => {
                     console.log(err)
